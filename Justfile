@@ -10,7 +10,8 @@ cxx_compiler := "${CXX}"
 c_compiler := "${CC}"
 cmake_build_type := "${BUILD_TYPE}"
 cmake_generator := "${GENERATOR}"
-build_dir := "build-" + cxx_compiler
+build_dir := "builddir/" + cxx_compiler
+target_output_dir := "artifacts"
 ncores := `nproc`
 
 default:
@@ -44,6 +45,7 @@ run_compliance_tests:
 
 clean: 
   rm -rf {{build_dir}}
+  rm -rf {{target_output_dir}}
 
 fmt: 
   find src -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i

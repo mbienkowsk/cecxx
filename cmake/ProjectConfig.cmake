@@ -5,6 +5,7 @@ option(WITH_EXAMPLES "Build examples" OFF)
 option(WITH_BENCHMARKS "Build benchmarks" OFF)
 
 set(BENCHMARK_DATA_STORAGE "${CMAKE_INSTALL_PREFIX}/share/cecxx")
+set(CECXX_TARGET_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/artifacts")
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(COMPILE_FLAGS -Wall -Wpedantic -Wextra -Wconversion -Wimplicit-fallthrough -Wundef)

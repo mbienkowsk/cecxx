@@ -9,6 +9,10 @@ enable_testing()
 add_executable(${TEST_TARGET} ${TEST_SOURCES})
 set_target_properties(${TEST_TARGET}
   PROPERTIES LINKER_LANGUAGE CXX CXX_STANDARD 23
+  ARCHIVE_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"
+  LIBRARY_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"
+  RUNTIME_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/bin"
+
 )
 target_include_directories(${TEST_TARGET} PUBLIC .)
 target_link_libraries(${TEST_TARGET} GTest::gtest_main cecxx)

@@ -53,6 +53,11 @@ target_sources(cecxx PUBLIC
 )
 target_compile_options(cecxx PRIVATE ${COMPILE_FLAGS})
 target_compile_features(cecxx PRIVATE cxx_std_23)
+set_target_properties(cecxx PROPERTIES 
+  ARCHIVE_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"
+  LIBRARY_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"
+  RUNTIME_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/bin"
+)
 
 message(STATUS
   "The cecxx library is going to be compiled with the following additional flags: ${COMPILE_FLAGS}"
