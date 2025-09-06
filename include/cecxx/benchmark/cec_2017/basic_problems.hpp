@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cecxx/functions/multimodal/schaffer.hpp"
-#include <cecxx/benchmark/detail/legacy/functions/multimodal/bi_rastrigin.hpp>
+#include <cecxx/benchmark/detail/legacy/functions/multimodal/bi_rastrigin2017.hpp>
 #include <cecxx/benchmark/detail/problem_invokers/basic_problem_invoker.hpp>
 #include <cecxx/functions/multimodal/ackley.hpp>
 #include <cecxx/functions/multimodal/discus.hpp>
@@ -22,7 +22,7 @@
 #include <cecxx/functions/unimodal/ellips.hpp>
 #include <cecxx/functions/unimodal/sum_diff_pow.hpp>
 
-namespace cecxx::benchmark::cec_2017 {
+namespace cecxx::benchmark::cec_2017::basic {
 static constexpr auto bent_cigar = detail::basic_problem_invoker{
     cecxx::functions::unimodal::bent_cigar,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
@@ -31,7 +31,10 @@ static constexpr auto bent_cigar = detail::basic_problem_invoker{
 static constexpr auto sum_diff_pow = detail::basic_problem_invoker{
     cecxx::functions::unimodal::sum_diff_pow,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::rotation{}}};
+    std::tuple{
+      cecxx::benchmark::detail::shift{},
+      cecxx::benchmark::detail::rotation{}
+    }};
 
 static constexpr auto zakharov = detail::basic_problem_invoker{
     cecxx::functions::multimodal::zakharov,
@@ -51,42 +54,46 @@ static constexpr auto rosenbrock
 static constexpr auto rastrigin = detail::basic_problem_invoker{
     cecxx::functions::multimodal::rastrigin,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::rotation{}}};
-
-static constexpr auto schaffer = detail::basic_problem_invoker{
-    cecxx::functions::multimodal::schaffer,
-    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::scale{0.5, 100.0},
+    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::scale{5.12, 100.0},
                cecxx::benchmark::detail::rotation{}}};
 
-static constexpr auto bi_rastrigin = detail::basic_problem_invoker{
-    cecxx::functions::multimodal::legacy::bi_rastrigin,
-    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::scale{600.0, 100.0},
-               cecxx::benchmark::detail::rotation{}}};
-
-static constexpr auto step_rastrigin
-    = detail::basic_problem_invoker{cecxx::functions::multimodal::step_rastrigin,
+static constexpr auto schaffer
+    = detail::basic_problem_invoker{cecxx::functions::multimodal::schaffer,
                                     {.rot = do_affine_trans::no, .shift = do_affine_trans::yes},
                                     std::tuple{
                                         cecxx::benchmark::detail::shift{},
+                                        cecxx::benchmark::detail::power_scale{},
+                                    }};
+
+static constexpr auto bi_rastrigin
+    = detail::basic_problem_invoker{cecxx::functions::multimodal::legacy::bi_rastrigin2017,
+                                    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
+                                    std::tuple{}};
+
+static constexpr auto step_rastrigin
+    = detail::basic_problem_invoker{cecxx::functions::multimodal::step_rastrigin,
+                                    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
+                                    std::tuple{
+                                        cecxx::benchmark::detail::shift{},
                                         cecxx::benchmark::detail::scale{5.12 / 100.0, 1.0},
+                                        cecxx::benchmark::detail::rotation{},
                                     }};
 
 static constexpr auto levy = detail::basic_problem_invoker{
     cecxx::functions::multimodal::levy,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::scale{5.12, 100.0},
-               cecxx::benchmark::detail::rotation{}}};
+    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::rotation{}}};
 
 static constexpr auto schwefel
     = detail::basic_problem_invoker{cecxx::functions::multimodal::schwefel,
-                                    {.rot = do_affine_trans::no, .shift = do_affine_trans::yes},
+                                    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
                                     std::tuple{
                                         cecxx::benchmark::detail::shift{},
+                                        cecxx::benchmark::detail::rotation{},
                                         cecxx::benchmark::detail::scale{1000.0 / 100.0, 1.0},
                                         cecxx::benchmark::detail::shift_by_scalar{4.209687462275036e+002},
                                     }};
+
 static constexpr auto ellips = detail::basic_problem_invoker{
     cecxx::functions::unimodal::ellips,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
@@ -131,5 +138,20 @@ static constexpr auto ackley = detail::basic_problem_invoker{
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
     std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::rotation{}}};
 
+static constexpr auto grie_rosen
+    = detail::basic_problem_invoker{cecxx::functions::multimodal::grie_rosen,
+                                    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
+                                    std::tuple{
+                                        cecxx::benchmark::detail::shift{},
+                                        cecxx::benchmark::detail::scale{5.0 / 100.0, 1.0},
+                                        cecxx::benchmark::detail::rotation{},
+                                        cecxx::benchmark::detail::shift_by_scalar{1.0},
+                                    }};
 
-} // namespace cecxx::benchmark::cec_2017
+static constexpr auto griewank = detail::basic_problem_invoker{
+    cecxx::functions::multimodal::griewank,
+    {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
+    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::scale{600.0, 100.0},
+               cecxx::benchmark::detail::rotation{}}};
+
+} // namespace cecxx::benchmark::cec_2017::basic

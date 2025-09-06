@@ -1,3 +1,4 @@
+#include "cecxx/benchmark/types.hpp"
 #include <cecxx/benchmark/detail/evaluate.hpp>
 #include <cecxx/benchmark/evaluator.hpp>
 

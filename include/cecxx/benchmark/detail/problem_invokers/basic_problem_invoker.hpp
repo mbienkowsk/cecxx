@@ -25,7 +25,6 @@ struct basic_problem_invoker {
                     std::optional<affine_mask_t> mask = {}) const -> double {
         const auto used_mask = mask.has_value() ? mask.value() : mask_;
         if constexpr (std::is_same_v<EvaluationFunction, contextless_eval_func>) {
-
             return fn(apply_geom_fns(input, ctx, used_mask, trans_));
         } else if constexpr (std::is_same_v<EvaluationFunction, contextful_eval_func>) {
             return fn(input, ctx, used_mask);
