@@ -1,4 +1,4 @@
-set dotenv-load
+set dotenv-filename := ".envrc"
 
 alias i := init
 alias b := build
