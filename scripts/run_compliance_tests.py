@@ -15,6 +15,14 @@ from dataclasses import dataclass
 # Orginal CEC implementation (which serves as a oracle in complaiance tests) leaks memory and it breaks fuzztest test runner.
 _DISABLE_ASAN = {"ASAN_OPTIONS": "detect_leaks=0"}
 
+_USAGE = """example:
+    python scripts/run_compliance_tests.py\
+        --target artifacts/bin/compliance-tests\
+        --edition 2013 2014 2017\
+        --duration 3\
+        --jobs 20
+"""
+
 ExitCode = int
 Seconds = int
 
@@ -22,6 +30,7 @@ Seconds = int
 class CecEdition(StrEnum):
     CEC2013 = "2013"
     CEC2014 = "2014"
+    CEC2017 = "2017"
 
 
 @dataclass
@@ -45,10 +54,18 @@ def run_test(
 ) -> tuple[FuzzTest, ExitCode]:
     print(f"Running compliance test [{test}] for next {duration}s...")
     p = subprocess.run(
-        [f"{target}","--gtest_filter", str(test), "--fuzz_for", f"{duration}s", "--gtest_brief", "1",],
+        [
+            f"{target}",
+            "--gtest_filter",
+            str(test),
+            "--fuzz_for",
+            f"{duration}s",
+            "--gtest_brief",
+            "1",
+        ],
         env=os.environ | _DISABLE_ASAN,
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.STDOUT,
     )
     return (test, p.returncode)
 
@@ -74,7 +91,9 @@ async def get_fuzztests(target: Path) -> list[FuzzTest]:
 
 
 async def run_compliance_tests(args: list[str]) -> None:
-    parser = argparse.ArgumentParser(prog="CEC compliance test running helper.")
+    parser = argparse.ArgumentParser(
+        prog="CEC compliance test running helper.", epilog=_USAGE
+    )
     parser.add_argument(
         "-t",
         "--target",
@@ -86,6 +105,7 @@ async def run_compliance_tests(args: list[str]) -> None:
         "-e",
         "--edition",
         nargs="+",
+        default=[e.value for e in CecEdition],
         help="List of CEC editions for which compliance tests will be run.",
     )
     parser.add_argument(
@@ -115,7 +135,7 @@ async def run_compliance_tests(args: list[str]) -> None:
             if t.cec_edition() in parsed.edition
         ]
         for test, excode in await asyncio.gather(*futures):
-            color = 'green' if not excode else 'red'
+            color = "green" if not excode else "red"
             print(colored(f"Test [{test}] finished with exit code [{excode}].", color))
 
 
@@ -124,4 +144,3 @@ if __name__ == "__main__":
         asyncio.run(run_compliance_tests(sys.argv[1:]))
     except Exception as err:
         print(f"Failed to run compliance tests. Error: {err}")
-

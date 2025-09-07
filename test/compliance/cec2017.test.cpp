@@ -17,7 +17,7 @@
 using namespace fuzztest;
 using namespace cecxx::benchmark;
 
-constexpr auto MAX_ABS_ERROR = 1e-7;
+constexpr auto MAX_ABS_ERROR = 1e-8;
 
 constexpr auto CEC_2017_LOWER_BOUND = -100.0;
 constexpr auto CEC_2017_UPPER_BOUND = 100.0;
@@ -54,20 +54,14 @@ FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D10ImplsAreEquiv)
     .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND, CEC_2017_UPPER_BOUND)).WithSize(10),
                  InCecProblemRange(cec_edition_t::cec2017));
 
-// FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D30ImplsAreEquiv)
-//     .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND,
-//                                                   CEC_2017_UPPER_BOUND))
-//                      .WithSize(30),
-//                  InCecProblemRange(cec_edition_t::cec2017));
-//
-// FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D50ImplsAreEquiv)
-//     .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND,
-//                                                   CEC_2017_UPPER_BOUND))
-//                      .WithSize(50),
-//                  InCecProblemRange(cec_edition_t::cec2017));
-//
-// FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D100ImplsAreEquiv)
-//     .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND,
-//                                                   CEC_2017_UPPER_BOUND))
-//                      .WithSize(100),
-//                  InCecProblemRange(cec_edition_t::cec2017));
+FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D30ImplsAreEquiv)
+    .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND, CEC_2017_UPPER_BOUND)).WithSize(30),
+                 InCecProblemRange(cec_edition_t::cec2017));
+
+FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D50ImplsAreEquiv)
+    .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND, CEC_2017_UPPER_BOUND)).WithSize(50),
+                 InCecProblemRange(cec_edition_t::cec2017));
+
+FUZZ_TEST_F(Cec2017ComplianceTest, Cec2017D100ImplsAreEquiv)
+    .WithDomains(PositiveVectorOf<double>(InRange(CEC_2017_LOWER_BOUND, CEC_2017_UPPER_BOUND)).WithSize(100),
+                 InCecProblemRange(cec_edition_t::cec2017));
