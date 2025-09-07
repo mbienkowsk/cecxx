@@ -1,4 +1,5 @@
 #include "cec2017.h"
+#include <print>
 
 #include <string>
 
@@ -12,8 +13,16 @@ auto STORAGE_PREFIX(const auto &format) -> std::string {
     return std::string{DATA_STORAGE_PATH} + "/cec2017/"s + format;
 }
 
-long double fast_pow(long double x, int p) {
-    long double res = 1;
+auto print_vec(auto *v, auto s, auto msg = "") {
+    std::print("[{}] [ ", msg);
+    for (auto i{0}; i < s; ++i) {
+        std::print("({}) {}, ", i, v[i]);
+    }
+    std::print("]\n");
+}
+
+double fast_pow(double x, int p) {
+    double res = 1;
     for (int i = 0; i != p; i++)
         res *= x;
     return res;
@@ -292,10 +301,10 @@ void sum_diff_pow_func(double *x, double *f, int nx, double *Os, double *Mr, int
     int i;
     sr_func(x, z, nx, Os, Mr, 1.0, s_flag, r_flag); // shift and rotate
     f[0] = 0.0;
-    long double sum = 0.0;
+    double sum = 0.0;
     for (i = 0; i < nx; i++) {
-        long double xi = z[i];
-        long double newv = pow((abs(xi)), (i + 1));
+        double xi = z[i];
+        double newv = pow((abs(xi)), (i + 1));
         sum = sum + newv;
     }
 
@@ -329,7 +338,6 @@ void levy_func(double *x, double *f, int nx, double *Os, double *Mr, int s_flag,
     double *w;
     w = (double *)malloc(sizeof(double) * nx);
 
-    double sum1 = 0.0;
     for (i = 0; i < nx; i++) {
         w[i] = 1.0 + (z[i] - 1.0) / 4.0;
     }
@@ -354,7 +362,6 @@ void dixon_price_func(double *x, double *f, int nx, double *Os, double *Mr, int 
                       int r_flag) /* Dixon and Price */
 {
     int i;
-    int j;
     sr_func(x, z, nx, Os, Mr, 1.0, s_flag, r_flag); // shift and rotate
     f[0] = 0;
     double x1 = z[0];

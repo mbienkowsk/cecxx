@@ -1,4 +1,4 @@
-set(TEST_TARGET "cecxx_unit_tests")
+set(TEST_TARGET "unit-tests")
 set(TEST_SOURCES
   evaluator.test.cpp
 )

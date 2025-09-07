@@ -225,6 +225,9 @@ auto apply_geom_fns(std::span<const double> input, problem_context_view_t ctx, a
         // std::println("output {}", fn.name);
         // print_vec(output);
     });
+    // std::println("final output");
+    // print_vec(output);
+
     return output;
 }
 

@@ -1,4 +1,4 @@
-set(TEST_TARGET "cecxx-compliance-tests")
+set(TEST_TARGET "compliance-tests")
 set(TEST_SOURCES
   cec2017.test.cpp
   cec2014.test.cpp
