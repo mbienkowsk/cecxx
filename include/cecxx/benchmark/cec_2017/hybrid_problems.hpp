@@ -31,14 +31,15 @@ const auto hybrid_3
                                      std::tuple{basic::bent_cigar, basic::rosenbrock, basic::bi_rastrigin},
                                      {0.3, 0.3, 0.4}};
 
-const auto hybrid_4
-    = detail::hybrid_problem_invoker{std::tuple{
-                                         cecxx::benchmark::detail::shift{},
-                                         cecxx::benchmark::detail::rotation{},
-                                         cecxx::benchmark::detail::shuffle{},
-                                     },
-                                     std::tuple{basic::ellips, basic::ackley, basic::schaffer, basic::rastrigin},
-                                     {0.2, 0.2, 0.2, 0.4}};
+const auto hybrid_4 = detail::hybrid_problem_invoker{
+    std::tuple{
+        cecxx::benchmark::detail::shift{},
+        cecxx::benchmark::detail::rotation{},
+        cecxx::benchmark::detail::shuffle{},
+    },
+    std::tuple{basic::ellips, basic::ackley, detail::needs_input_before_affine_trans{basic::schaffer},
+               basic::rastrigin},
+    {0.2, 0.2, 0.2, 0.4}};
 
 const auto hybrid_5
     = detail::hybrid_problem_invoker{std::tuple{

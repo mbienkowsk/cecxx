@@ -1,11 +1,11 @@
 #pragma once
 
-#include "cecxx/functions/multimodal/schaffer.hpp"
 #include <cecxx/benchmark/detail/legacy/functions/multimodal/bi_rastrigin2017.hpp>
 #include <cecxx/benchmark/detail/problem_invokers/basic_problem_invoker.hpp>
 #include <cecxx/functions/multimodal/ackley.hpp>
 #include <cecxx/functions/multimodal/discus.hpp>
 #include <cecxx/functions/multimodal/escaffer.hpp>
+#include <cecxx/functions/multimodal/schaffer.hpp>
 #include <cecxx/functions/multimodal/grie_rosen.hpp>
 #include <cecxx/functions/multimodal/griewank.hpp>
 #include <cecxx/functions/multimodal/happycat.hpp>
@@ -31,10 +31,7 @@ static constexpr auto bent_cigar = detail::basic_problem_invoker{
 static constexpr auto sum_diff_pow = detail::basic_problem_invoker{
     cecxx::functions::unimodal::sum_diff_pow,
     {.rot = do_affine_trans::yes, .shift = do_affine_trans::yes},
-    std::tuple{
-      cecxx::benchmark::detail::shift{},
-      cecxx::benchmark::detail::rotation{}
-    }};
+    std::tuple{cecxx::benchmark::detail::shift{}, cecxx::benchmark::detail::rotation{}}};
 
 static constexpr auto zakharov = detail::basic_problem_invoker{
     cecxx::functions::multimodal::zakharov,

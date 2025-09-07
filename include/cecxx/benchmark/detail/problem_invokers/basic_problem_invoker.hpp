@@ -17,6 +17,8 @@ constexpr void for_sequence(std::integer_sequence<T, S...>, F &&f) {
 
 template <typename EvaluationFunction, typename... AffineTransformation>
 struct basic_problem_invoker {
+  using evaluation_function_t = EvaluationFunction;
+
     constexpr basic_problem_invoker(EvaluationFunction fn, affine_mask_t mask,
                                     std::tuple<AffineTransformation...> affine_fns)
         : fn{std::move(fn)}, mask_{mask}, trans_{affine_fns} {}

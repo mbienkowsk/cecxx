@@ -6,10 +6,22 @@
 
 #include <cecxx/benchmark/detail/context.hpp>
 #include <cecxx/benchmark/detail/problem_invokers/affine_transformations.hpp>
+
 #include <span>
 #include <tuple>
 
 namespace cecxx::benchmark::detail {
+
+template <typename T>
+struct needs_input_before_affine_trans {
+    using evaluation_function_t = T;
+    T fn;
+
+    auto operator()(std::span<const double> input, problem_context_view_t ctx,
+                    std::optional<affine_mask_t> mask) const {
+        return fn(input, ctx, mask);
+    }
+};
 
 namespace {
 auto print_vec2(auto &&xs) {
@@ -63,10 +75,20 @@ private:
         (
             [&](auto) {
                 auto comp_fn = std::get<CompoundIndices>(compounds);
-                const auto partial_input = input.subspan(static_cast<unsigned int>(offsets[CompoundIndices]),
-                                                         static_cast<unsigned int>(sizes[CompoundIndices]));
-                partial_eval[CompoundIndices] = comp_fn(
-                    partial_input, ctx, affine_mask_t{.rot = do_affine_trans::no, .shift = do_affine_trans::no});
+                using eval_func_t = decltype(comp_fn);
+                if constexpr (std::is_same_v<eval_func_t, needs_input_before_affine_trans<
+                                                              typename eval_func_t::evaluation_function_t>>) {
+                    const auto partial_input
+                        = input.subspan(static_cast<unsigned int>(offsets[0]), static_cast<unsigned int>(sizes[0]));
+                    partial_eval[CompoundIndices] = comp_fn(
+                        partial_input, ctx, affine_mask_t{.rot = do_affine_trans::no, .shift = do_affine_trans::no});
+
+                } else {
+                    const auto partial_input = input.subspan(static_cast<unsigned int>(offsets[CompoundIndices]),
+                                                             static_cast<unsigned int>(sizes[CompoundIndices]));
+                    partial_eval[CompoundIndices] = comp_fn(
+                        partial_input, ctx, affine_mask_t{.rot = do_affine_trans::no, .shift = do_affine_trans::no});
+                }
             }(CompoundIndices),
             ...);
 

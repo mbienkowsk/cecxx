@@ -5,6 +5,7 @@
 #include <functional>
 #include <print>
 #include <ranges>
+#include <stdexcept>
 #include <vector>
 
 #include "../test/compliance/oracle/cec2017.h"
@@ -28,7 +29,7 @@ auto call_oracle(std::span<double> input, const auto fn_num) -> double {
 auto main() -> int {
     try {
         constexpr auto dim{10uz};
-        constexpr auto fn_num{2};
+        constexpr auto fn_num{14};
         // Create an evaluator object for the CEC2017 benchmark for 50D
         auto cec_2017 = evaluator(cecxx::benchmark::cec_edition_t::cec2017, std::vector{dim}, DATA_STORAGE_PATH);
 
@@ -47,7 +48,7 @@ auto main() -> int {
         std::println("Dummy optimizer's result: {}", result);
         std::println("Oracle result: {}", oracle_result);
         if (std::abs(result - oracle_result) > 1e-7) {
-          std::terminate();
+          throw std::runtime_error{"non-compliant"};
         }
     } catch (std::exception &e) {
         std::println("Failed: {}", e.what());

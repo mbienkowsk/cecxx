@@ -434,6 +434,8 @@ void schaffer_F7_func(double *x, double *f, int nx, double *Os, double *Mr, int 
     double tmp;
     f[0] = 0.0;
     sr_func(x, z, nx, Os, Mr, 1.0, s_flag, r_flag); /* shift and rotate */
+    print_vec(y, nx, "LEGACY");
+
     for (i = 0; i < nx - 1; i++) {
         z[i] = pow(y[i] * y[i] + y[i + 1] * y[i + 1], 0.5);
         tmp = sin(50.0 * pow(z[i], 0.2));
@@ -863,6 +865,7 @@ void hf04(double *x, double *f, int nx, double *Os, double *Mr, int *S, int s_fl
         y[i] = z[S[i] - 1];
     }
     i = 0;
+    print_vec(y, nx, "LEGACY BEFORE ALL");
     ellips_func(&y[G[i]], &fit[i], G_nx[i], Os, Mr, 0, 0);
     i = 1;
     ackley_func(&y[G[i]], &fit[i], G_nx[i], Os, Mr, 0, 0);
