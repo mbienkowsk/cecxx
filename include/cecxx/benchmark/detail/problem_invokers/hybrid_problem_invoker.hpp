@@ -6,32 +6,12 @@
 
 #include <cecxx/benchmark/detail/context.hpp>
 #include <cecxx/benchmark/detail/problem_invokers/affine_transformations.hpp>
+#include <cecxx/benchmark/detail/problem_invokers/decorators.hpp>
 
 #include <span>
 #include <tuple>
 
 namespace cecxx::benchmark::detail {
-
-template <typename T>
-struct needs_input_before_affine_trans {
-    using evaluation_function_t = T;
-    T fn;
-
-    auto operator()(std::span<const double> input, problem_context_view_t ctx,
-                    std::optional<affine_mask_t> mask) const {
-        return fn(input, ctx, mask);
-    }
-};
-
-namespace {
-auto print_vec2(auto &&xs) {
-    for (auto &&[i, x] : xs | std::ranges::views::enumerate) {
-        std::print("({}) {}, ", i, x);
-    }
-    std::println("");
-}
-
-} // namespace
 
 auto calc_hybrid_chunks(std::ranges::range auto &&mix_ratios, const std::integral auto dim) {
     const auto fn_num = mix_ratios.size();
@@ -50,10 +30,11 @@ auto calc_hybrid_chunks(std::ranges::range auto &&mix_ratios, const std::integra
     return std::make_pair(chunk_size, chunk_offset);
 }
 
-template <typename AF, typename... F>
+template <typename AffineTransformationsTupleT, typename... EvaluationFunctionT>
 class hybrid_problem_invoker {
 public:
-    constexpr hybrid_problem_invoker(AF affine_fns, std::tuple<F...> compounds, std::vector<double> compound_ratios)
+    constexpr hybrid_problem_invoker(AffineTransformationsTupleT affine_fns,
+                                     std::tuple<EvaluationFunctionT...> compounds, std::vector<double> compound_ratios)
         : trans_{affine_fns}, compounds{compounds}, compound_ratios{std::move(compound_ratios)} {}
 
     auto operator()(std::span<const double> input, problem_context_view_t ctx,
@@ -76,8 +57,9 @@ private:
             [&](auto) {
                 auto comp_fn = std::get<CompoundIndices>(compounds);
                 using eval_func_t = decltype(comp_fn);
-                if constexpr (std::is_same_v<eval_func_t, needs_input_before_affine_trans<
-                                                              typename eval_func_t::evaluation_function_t>>) {
+                // TODO: refactor
+                if constexpr (std::is_same_v<eval_func_t,
+                                             pass_full_input_decorator<typename eval_func_t::evaluation_function_t>>) {
                     const auto partial_input = input.subspan(0u, static_cast<unsigned int>(sizes[CompoundIndices]));
                     partial_eval[CompoundIndices] = comp_fn(
                         partial_input, ctx, affine_mask_t{.rot = do_affine_trans::no, .shift = do_affine_trans::no});
@@ -93,8 +75,8 @@ private:
 
         return partial_eval;
     }
-    AF trans_{};
-    std::tuple<F...> compounds{};
+    AffineTransformationsTupleT trans_{};
+    std::tuple<EvaluationFunctionT...> compounds{};
     std::vector<double> compound_ratios{};
 };
 } // namespace cecxx::benchmark::detail

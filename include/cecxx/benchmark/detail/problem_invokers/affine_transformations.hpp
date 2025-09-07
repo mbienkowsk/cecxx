@@ -11,13 +11,13 @@
 
 namespace cecxx::benchmark::detail {
 
+// TODO: this whole module needs a proper refactor
+
 using partial_result_t = std::unordered_map<std::string, std::vector<double>>;
 
-auto print_vec(auto &&xs) {
-    for (auto &&[i, x] : xs | std::ranges::views::enumerate) {
-        std::print("({}) {}, ", i, x);
-    }
-    std::println("");
+template <typename T, T... S, typename F>
+constexpr void for_sequence(std::integer_sequence<T, S...>, F &&f) {
+    (void(f(std::integral_constant<T, S>{})), ...);
 }
 
 struct rotation {
@@ -216,17 +216,11 @@ auto apply_geom_fns(std::span<const double> input, problem_context_view_t ctx, a
     auto output = std::vector<double>(input.size());
     output.assign(input.begin(), input.end());
     auto partial = std::unordered_map<std::string, std::vector<double>>{};
-    // std::println("input");
-    // print_vec(input);
     for_sequence(std::make_index_sequence<std::tuple_size_v<decltype(affine_fns)>>{}, [&](auto i) {
         auto &&fn = std::get<i>(affine_fns);
         fn(output, ctx, mask, partial);
         partial[fn.name] = output;
-        // std::println("output {}", fn.name);
-        // print_vec(output);
     });
-    // std::println("final output");
-    // print_vec(output);
 
     return output;
 }

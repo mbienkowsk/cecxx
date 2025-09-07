@@ -13,10 +13,10 @@ struct complex_problem_params {
     std::vector<std::pair<double, double>> scales;
 };
 
-template <typename... F>
+template <typename... EvaluationFunctionT>
 class complex_problem_invoker {
 public:
-    complex_problem_invoker(std::tuple<F...> compounds, complex_problem_params parameters)
+    complex_problem_invoker(std::tuple<EvaluationFunctionT...> compounds, complex_problem_params parameters)
         : compounds{compounds}, params{std::move(parameters)} {}
 
     auto operator()(std::span<const double> input, problem_context_view_t ctx) const -> double {
@@ -51,7 +51,7 @@ private:
         return partial_eval;
     }
 
-    std::tuple<F...> compounds{};
+    std::tuple<EvaluationFunctionT...> compounds{};
     complex_problem_params params{};
 };
 } // namespace cecxx::benchmark::detail
