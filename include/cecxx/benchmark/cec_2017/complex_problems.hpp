@@ -6,7 +6,7 @@
 
 namespace cecxx::benchmark::cec_2017 {
 
-const auto complex_1 = detail::complex_problem_invoker{std::tuple{basic::rosenbrock, basic::griewank, basic::schwefel},
+const auto complex_1 = detail::complex_problem_invoker{std::tuple{basic::rosenbrock, basic::ellips, basic::rastrigin},
                                                        {.deltas = {10.0, 20.0, 30.0},
                                                         .biases = {0.0, 100.0, 200.0},
                                                         .masks = {
