@@ -97,7 +97,8 @@ const auto hybrid_10 = detail::hybrid_problem_invoker{
         cecxx::benchmark::detail::shuffle{},
     },
 
-    std::tuple{basic::hgbat, basic::katsuura, basic::ackley, basic::rastrigin, basic::schwefel, basic::schaffer},
+    std::tuple{basic::hgbat, basic::katsuura, basic::ackley, basic::rastrigin, basic::schwefel,
+               detail::needs_input_before_affine_trans{basic::schaffer}},
     {0.1, 0.1, 0.2, 0.2, 0.2, 0.2}};
 
 } // namespace cecxx::benchmark::cec_2017
