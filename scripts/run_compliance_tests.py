@@ -1,16 +1,15 @@
-from termcolor import colored
-from enum import StrEnum
-import sys
-import re
-import os
-from pathlib import Path
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
-import subprocess
 import argparse
-
+import asyncio
+import os
+import re
+import subprocess
+import sys
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from enum import StrEnum
+from pathlib import Path
 
+from termcolor import colored
 
 # Orginal CEC implementation (which serves as a oracle in complaiance tests) leaks memory and it breaks fuzztest test runner.
 _DISABLE_ASAN = {"ASAN_OPTIONS": "detect_leaks=0"}
