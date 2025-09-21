@@ -1,7 +1,7 @@
-#include <cecxx/benchmark/cec_2017/basic_problems.hpp>
-#include <cecxx/benchmark/cec_2017/complex_problems.hpp>
-#include <cecxx/benchmark/cec_2017/hybrid_problems.hpp>
-#include <cecxx/benchmark/cec_2017/problem_evaluation_mappings.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/basic_problems.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/complex_problems.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/hybrid_problems.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/problem_evaluation_mappings.hpp>
 #include <utility>
 
 namespace cecxx::benchmark::cec_2017 {

@@ -59,7 +59,7 @@ set_target_properties(cecxx PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/bin"
 )
 
-configure_file(defaults.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/cecxx/benchmark/defaults.hpp)
+configure_file(defaults.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/cecxx/detail/benchmark/evaluator/defaults.hpp)
 generate_export_header(cecxx)
 
 if (WITH_EXAMPLES)

@@ -4,9 +4,9 @@
 #include <functional>
 #include <vector>
 
-#include <cecxx/benchmark/defaults.hpp>
-#include <cecxx/benchmark/detail/context.hpp>
-#include <cecxx/benchmark/types.hpp>
+#include <cecxx/detail/benchmark/evaluator/defaults.hpp>
+#include <cecxx/detail/benchmark/evaluator/context.hpp>
+#include <cecxx/detail/benchmark/evaluator/types.hpp>
 
 namespace cecxx::benchmark {
 

@@ -1,6 +1,6 @@
 #include <cecxx/benchmark/evaluator.hpp>
-#include <cecxx/benchmark/helpers.hpp>
-#include <cecxx/benchmark/types.hpp>
+#include <cecxx/detail/benchmark/evaluator/helpers.hpp>
+#include <cecxx/detail/benchmark/evaluator/types.hpp>
 #include <gtest/gtest.h>
 #include <print>
 #include <ranges>

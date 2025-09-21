@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "cecxx/benchmark/evaluator.hpp"
-#include "cecxx/benchmark/types.hpp"
+#include "cecxx/detail/benchmark/evaluator/types.hpp"
 #include "oracle/cec2013.h"
 #include "oracle/cec2014.h"
 #include "oracle/cec2017.h"

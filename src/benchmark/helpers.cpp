@@ -1,8 +1,8 @@
-#include <cecxx/benchmark/cec_2013/consts.hpp>
-#include <cecxx/benchmark/cec_2014/consts.hpp>
-#include <cecxx/benchmark/cec_2017/consts.hpp>
-#include <cecxx/benchmark/helpers.hpp>
-#include <cecxx/benchmark/types.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2013/consts.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2014/consts.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/consts.hpp>
+#include <cecxx/detail/benchmark/evaluator/helpers.hpp>
+#include <cecxx/detail/benchmark/evaluator/types.hpp>
 #include <utility>
 
 namespace cecxx::benchmark {

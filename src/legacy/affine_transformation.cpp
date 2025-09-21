@@ -7,10 +7,10 @@
 #include <utility>
 #include <vector>
 
-#include <cecxx/benchmark/detail/legacy/affine_transformation.hpp>
+#include <cecxx/detail/benchmark/evaluator/legacy/affine_transformation.hpp>
 
-#include "cecxx/benchmark/types.hpp"
 #include "consts.h"
+#include <cecxx/detail/benchmark/evaluator/types.hpp>
 
 namespace cecxx::benchmark::detail {
 void shufflefunc(std::span<const double> input, std::span<double> output, std::span<const unsigned int> shuffle_vec) {

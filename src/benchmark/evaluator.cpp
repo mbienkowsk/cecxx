@@ -1,6 +1,6 @@
-#include "cecxx/benchmark/types.hpp"
-#include <cecxx/benchmark/detail/evaluate.hpp>
+#include "cecxx/detail/benchmark/evaluator/types.hpp"
 #include <cecxx/benchmark/evaluator.hpp>
+#include <cecxx/detail/benchmark/evaluator/evaluate.hpp>
 
 namespace cecxx::benchmark {
 

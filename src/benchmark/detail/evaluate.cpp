@@ -1,7 +1,7 @@
-#include <cecxx/benchmark/cec_2013/problem_evaluation_mappings.hpp>
-#include <cecxx/benchmark/cec_2014/problem_evaluation_mappings.hpp>
-#include <cecxx/benchmark/cec_2017/problem_evaluation_mappings.hpp>
-#include <cecxx/benchmark/detail/evaluate.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2013/problem_evaluation_mappings.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2014/problem_evaluation_mappings.hpp>
+#include <cecxx/detail/benchmark/evaluator/cec_2017/problem_evaluation_mappings.hpp>
+#include <cecxx/detail/benchmark/evaluator/evaluate.hpp>
 
 namespace cecxx::benchmark::detail {
 

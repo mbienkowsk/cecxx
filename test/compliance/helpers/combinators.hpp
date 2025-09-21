@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <vector>
 
-#include "cecxx/benchmark/types.hpp"
+#include "cecxx/detail/benchmark/evaluator/types.hpp"
 #include "fuzztest/fuzztest.h"
 
 template <typename T>

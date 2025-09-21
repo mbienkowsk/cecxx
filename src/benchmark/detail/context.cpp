@@ -1,11 +1,11 @@
-#include "cecxx/benchmark/detail/context.hpp"
+#include "cecxx/detail/benchmark/evaluator/context.hpp"
 
 #include <algorithm>
 #include <ranges>
 
 #include "../table_io.hpp"
-#include "cecxx/benchmark/helpers.hpp"
-#include "cecxx/benchmark/types.hpp"
+#include "cecxx/detail/benchmark/evaluator/helpers.hpp"
+#include "cecxx/detail/benchmark/evaluator/types.hpp"
 
 namespace cecxx::benchmark::detail {
 
