@@ -1,6 +1,7 @@
 builddir/*
 dist/*
 build-*/*
+build/*
 .cache/*
 legacy/*
 include/cecxx/benchmark/defaults.hpp

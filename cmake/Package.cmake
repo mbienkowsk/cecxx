@@ -3,7 +3,7 @@ set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 
 set(CPACK_PACKAGE_NAME "lib${PROJECT_NAME}")
 set(CPACK_DEBIAN_PACKAGE_NAME "libcecxx")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An implementation of CEC benchmarks in C++20."
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "An implementation of CEC benchmarks in C++23."
     CACHE STRING "Package description for the package metadata"
 )
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Eryk Warchulski")
