@@ -1,9 +1,6 @@
 #pragma once
 
-// clang-format off
 #include "gtest/gtest.h"
-#include <algorithm>
-// clang-format on
 
 #include "cecxx/benchmark/evaluator.hpp"
 #include "cecxx/benchmark/types.hpp"

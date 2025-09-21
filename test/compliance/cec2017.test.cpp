@@ -1,8 +1,5 @@
-// clang-format off
-#include "gtest/gtest.h"
 #include "fuzztest/fuzztest.h"
 #include "fuzztest/googletest_fixture_adapter.h"
-// clang-format on
 
 #include "helpers/combinators.hpp"
 #include "helpers/fixtures.hpp"
