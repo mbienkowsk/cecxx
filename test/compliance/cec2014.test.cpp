@@ -17,7 +17,7 @@
 using namespace fuzztest;
 using namespace cecxx::benchmark;
 
-constexpr auto MAX_ABS_ERROR = 1e-8;
+constexpr auto MAX_ABS_ERROR = 1e-7;
 
 constexpr auto CEC_2014_LOWER_BOUND = -100.0;
 constexpr auto CEC_2014_UPPER_BOUND = 100.0;

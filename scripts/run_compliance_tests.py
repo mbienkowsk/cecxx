@@ -38,8 +38,17 @@ class FuzzTest:
     test_group: str
     test_name: str
 
-    def cec_edition(self) -> CecEdition:
+    @property
+    def edition(self) -> CecEdition:
         return CecEdition(re.findall(r"\d+", self.test_group)[0])
+
+    @property
+    def dimension(self) -> int:
+        return int(re.findall(r"D(\d+)", self.test_name)[0])
+
+    @property
+    def name(self) -> str:
+        return f"CEC/{self.edition}/DIM/{self.dimension}"
 
     def __str__(self) -> str:
         return f"{self.test_group}.{self.test_name}"
@@ -52,7 +61,7 @@ def open_range(start, end):
 def run_test(
     target: Path, test: FuzzTest, duration: Seconds
 ) -> tuple[FuzzTest, ExitCode]:
-    print(f"Running compliance test [{test}] for next {duration}s...")
+    print(f"Running compliance test [{test.name}] for next {duration}s...")
     p = subprocess.run(
         [
             f"{target}",
@@ -132,11 +141,15 @@ async def run_compliance_tests(args: list[str]) -> None:
         futures = [
             loop.run_in_executor(tp_ex, run_test, parsed.target, t, parsed.duration)
             for t in tests
-            if t.cec_edition() in parsed.edition
+            if t.edition in parsed.edition
         ]
         for test, excode in await asyncio.gather(*futures):
             color = "green" if not excode else "red"
-            print(colored(f"Test [{test}] finished with exit code [{excode}].", color))
+            print(
+                colored(
+                    f"Test [{test.name}] finished with exit code [{excode}].", color
+                )
+            )
 
 
 if __name__ == "__main__":
@@ -144,3 +157,5 @@ if __name__ == "__main__":
         asyncio.run(run_compliance_tests(sys.argv[1:]))
     except Exception as err:
         print(f"Failed to run compliance tests. Error: {err}")
+        sys.exit(os.EX_SOFTWARE)
+    sys.exit(os.EX_OK)
