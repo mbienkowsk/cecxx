@@ -35,22 +35,18 @@ class CecEdition(StrEnum):
 @dataclass
 class FuzzTest:
     test_group: str
-    test_name: str
+    dimension: int
 
     @property
     def edition(self) -> CecEdition:
         return CecEdition(re.findall(r"\d+", self.test_group)[0])
 
     @property
-    def dimension(self) -> int:
-        return int(re.findall(r"D(\d+)", self.test_name)[0])
-
-    @property
     def name(self) -> str:
         return f"CEC/{self.edition}/DIM/{self.dimension}"
 
     def __str__(self) -> str:
-        return f"{self.test_group}.{self.test_name}"
+        return f"{self.test_group}.{self.dimension}"
 
 
 def open_range(start, end):

@@ -1,13 +1,17 @@
 #pragma once
 
+#include <type_traits>
 #include <vector>
 
 #include "cecxx/benchmark/types.hpp"
 #include "fuzztest/fuzztest.h"
 
 template <typename T>
-auto PositiveVectorOf(auto &&Rng) {
-    return fuzztest::ContainerOf<std::vector>(std::forward<decltype(Rng)>(Rng));
+using RngType = std::result_of_t<decltype (&fuzztest::InRange<T>)(T, T)>;
+
+template <typename T = double>
+auto BoundedVectorOf(RngType<T> rng = fuzztest::InRange(-100.0, 100.0)) {
+    return fuzztest::ContainerOf<std::vector<T>>(std::forward<decltype(rng)>(rng));
 }
 
 inline auto InCecProblemRange(cecxx::benchmark::cec_edition_t edition) {
