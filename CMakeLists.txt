@@ -59,19 +59,8 @@ set_target_properties(cecxx PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/bin"
 )
 
-message(STATUS
-  "The cecxx library is going to be compiled with the following additional flags: ${COMPILE_FLAGS}"
-)
-
-configure_file(defaults.hpp.in
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/cecxx/benchmark/defaults.hpp)
+configure_file(defaults.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/cecxx/benchmark/defaults.hpp)
 generate_export_header(cecxx)
-
-write_basic_package_version_file(
-  "${PROJECT_BINARY_DIR}/cecxxConfigVersion.cmake"
-  VERSION ${PROJECT_VER}
-  COMPATIBILITY AnyNewerVersion
-)
 
 if (WITH_EXAMPLES)
   add_subdirectory(example)
@@ -87,3 +76,36 @@ if (WITH_UNIT_TESTS OR WITH_COMPLIANCE_TESTS)
   endif()
   add_subdirectory(test)
 endif()
+
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cecxx.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/cecxx.pc
+  @ONLY
+)
+
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/cecxx.pc
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+)
+
+write_basic_package_version_file(
+  "${PROJECT_BINARY_DIR}/cecxx-config-version.cmake"
+  VERSION ${PROJECT_VER}
+  COMPATIBILITY AnyNewerVersion
+)
+
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/cecxx-config-version.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cecxx-config.cmake
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cecxx
+)
+
+install(TARGETS cecxx
+  EXPORT cecxxTargets
+  FILE_SET HEADERS
+)
+
+install(EXPORT cecxxTargets
+  NAMESPACE cecxx::
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/cecxx
+)

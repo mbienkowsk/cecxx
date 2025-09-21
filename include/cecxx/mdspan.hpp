@@ -9,7 +9,7 @@
 
 #endif
 
-#include "cecxx/detail/mdspan/mdspan"
+#include <cecxx/detail/mdspan/mdspan.hpp>
 
 #if defined(__GNUC__)
 
