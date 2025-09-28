@@ -8,7 +8,7 @@ C++23.
 The `{cecxx}` is a novel implementation of IEEE CEC BC-SOP benchmarks in C++23, which compared to the [official implementation
 ](https://github.com/P-N-Suganthan?tab=repositories) does not:
 - leak memory 
-- involves multiple IO operations during each objective function call.
+- involve multiple IO operations during each objective function call.
 
 Solving the above problems results in reliable and fast implementation that is ready to be used in your numerical experiments.
 
