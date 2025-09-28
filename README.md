@@ -36,3 +36,5 @@ cmake ..
 sudo make install
 popd
 ```
+
+See [Justfile](https://codeberg.org/ewarchul/cecxx/src/branch/main/Justfile) for details.
