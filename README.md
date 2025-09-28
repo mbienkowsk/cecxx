@@ -12,8 +12,7 @@ The `{cecxx}` is a novel implementation of IEEE CEC BC-SOP benchmarks in C++23, 
 
 Solving the above problems results in reliable and fast implementation that is ready to be used in your numerical experiments.
 
-Check [example
-directory](https://codeberg.org/ewarchul/cecxx/src/branch/main/example)
+Check the [example](https://codeberg.org/ewarchul/cecxx/src/branch/main/example) directory
 to see how to use this library. The `{cecxx}` includes also free-standing
 implementations of objective functions utlized by CEC benchmarks, see
 [include/cecxx/functions](https://codeberg.org/ewarchul/cecxx/src/branch/main/include/cecxx/functions)
