@@ -11,6 +11,8 @@ ncores := `nproc`
 default:
   @just --list
 
+setup: clean init build install
+
 init cxx=cxx_compiler:
   git submodule update --init
   cd data && unzip -uq \*.zip
@@ -28,7 +30,7 @@ init cxx=cxx_compiler:
 build: 
   cmake --build {{build_dir}} --parallel {{ncores}}
 
-instal:
+install:
   cmake --install {{build_dir}}
 
 run_unit_tests:
