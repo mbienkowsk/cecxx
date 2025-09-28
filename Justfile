@@ -49,4 +49,4 @@ clean:
 
 fmt: 
   find src -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
-  find include -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i
+  find include  -not -path '**/mdspan/**'  -iname '*.hpp' -o -iname '*.cpp' | xargs clang-format -i

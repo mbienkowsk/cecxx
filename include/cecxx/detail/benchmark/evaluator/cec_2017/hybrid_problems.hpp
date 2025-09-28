@@ -37,8 +37,7 @@ const auto hybrid_4 = detail::hybrid_problem_invoker{
         cecxx::benchmark::detail::rotation{},
         cecxx::benchmark::detail::shuffle{},
     },
-    std::tuple{basic::ellips, basic::ackley, detail::pass_full_input_decorator{basic::schaffer},
-               basic::rastrigin},
+    std::tuple{basic::ellips, basic::ackley, detail::pass_full_input_decorator{basic::schaffer}, basic::rastrigin},
     {0.2, 0.2, 0.2, 0.4}};
 
 const auto hybrid_5
@@ -90,15 +89,15 @@ const auto hybrid_9 = detail::hybrid_problem_invoker{
     std::tuple{basic::bent_cigar, basic::rastrigin, basic::grie_rosen, basic::weierstrass, basic::escaffer},
     {0.2, 0.2, 0.2, 0.2, 0.2}};
 
-const auto hybrid_10 = detail::hybrid_problem_invoker{
-    std::tuple{
-        cecxx::benchmark::detail::shift{},
-        cecxx::benchmark::detail::rotation{},
-        cecxx::benchmark::detail::shuffle{},
-    },
+const auto hybrid_10
+    = detail::hybrid_problem_invoker{std::tuple{
+                                         cecxx::benchmark::detail::shift{},
+                                         cecxx::benchmark::detail::rotation{},
+                                         cecxx::benchmark::detail::shuffle{},
+                                     },
 
-    std::tuple{basic::hgbat, basic::katsuura, basic::ackley, basic::rastrigin, basic::schwefel,
-               detail::pass_full_input_decorator{basic::schaffer}},
-    {0.1, 0.1, 0.2, 0.2, 0.2, 0.2}};
+                                     std::tuple{basic::hgbat, basic::katsuura, basic::ackley, basic::rastrigin,
+                                                basic::schwefel, detail::pass_full_input_decorator{basic::schaffer}},
+                                     {0.1, 0.1, 0.2, 0.2, 0.2, 0.2}};
 
 } // namespace cecxx::benchmark::cec_2017

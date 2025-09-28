@@ -5,7 +5,6 @@
 #include <cecxx/functions/multimodal/ackley.hpp>
 #include <cecxx/functions/multimodal/discus.hpp>
 #include <cecxx/functions/multimodal/escaffer.hpp>
-#include <cecxx/functions/multimodal/schaffer.hpp>
 #include <cecxx/functions/multimodal/grie_rosen.hpp>
 #include <cecxx/functions/multimodal/griewank.hpp>
 #include <cecxx/functions/multimodal/happycat.hpp>
@@ -14,6 +13,7 @@
 #include <cecxx/functions/multimodal/levy.hpp>
 #include <cecxx/functions/multimodal/rastrigin.hpp>
 #include <cecxx/functions/multimodal/rosenbrock.hpp>
+#include <cecxx/functions/multimodal/schaffer.hpp>
 #include <cecxx/functions/multimodal/schwefel.hpp>
 #include <cecxx/functions/multimodal/step_rastrigin.hpp>
 #include <cecxx/functions/multimodal/weierstrass.hpp>
