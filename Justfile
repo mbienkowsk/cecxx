@@ -31,7 +31,7 @@ build:
   cmake --build {{build_dir}} --parallel {{ncores}}
 
 install:
-  cmake --install {{build_dir}}
+  sudo cmake --install {{build_dir}}
 
 run_unit_tests:
   ./artifacts/bin/unit-tests

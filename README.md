@@ -37,4 +37,12 @@ sudo make install
 popd
 ```
 
-See [Justfile](https://codeberg.org/ewarchul/cecxx/src/branch/main/Justfile) recipes for details.
+If you are using `just` then you can run: 
+
+```sh
+CXX=clang++ just setup
+```
+
+to build and install the library with the clang compiler. See
+[Justfile](https://codeberg.org/ewarchul/cecxx/src/branch/main/Justfile) for
+details.
