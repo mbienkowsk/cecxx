@@ -1,6 +1,6 @@
 set(EVAL_EACH_PROBLEM_EXAMPLE "evaluate-each-problem")
 add_executable(${EVAL_EACH_PROBLEM_EXAMPLE} evaluate_each_problem.cpp )
-target_link_libraries(${EVAL_EACH_PROBLEM_EXAMPLE} PRIVATE cecxx::cecxx)
+target_link_libraries(${EVAL_EACH_PROBLEM_EXAMPLE} PRIVATE cecxx)
 set_target_properties(
   ${EVAL_EACH_PROBLEM_EXAMPLE} PROPERTIES CXX_STANDARD 23
   ARCHIVE_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"
@@ -13,7 +13,7 @@ target_compile_options(${EVAL_EACH_PROBLEM_EXAMPLE} PRIVATE -Wall -Wextra -Wpeda
 
 set(EVAL_SEP_PROBLEM_EXAMPLE "evaluate-separate-problem")
 add_executable(${EVAL_SEP_PROBLEM_EXAMPLE} evaluate_separate_problem.cpp)
-target_link_libraries(${EVAL_SEP_PROBLEM_EXAMPLE} PRIVATE cecxx::cecxx)
+target_link_libraries(${EVAL_SEP_PROBLEM_EXAMPLE} PRIVATE cecxx)
 set_target_properties(
   ${EVAL_SEP_PROBLEM_EXAMPLE} PROPERTIES CXX_STANDARD 23
   ARCHIVE_OUTPUT_DIRECTORY "${CECXX_TARGET_OUTPUT_DIR}/lib"

@@ -10,6 +10,10 @@
 
 #define FUZZ_TEST_F_NAMED(fixture, test_name, func) INTERNAL_FUZZ_TEST_F(fixture, test_name, fixture, func)
 
+#define CEC_COMPLIANCE_TEST(cec_year, dimension)                                                                       \
+    FUZZ_TEST_F_NAMED(ComplianceTestCec##cec_year, dimension, CecTestFixture::evaluate)                                \
+        .WithDomains(BoundedVectorOf().WithSize(dimension), InCecProblemRange(cec_edition_t::cec##cec_year));
+
 inline auto get_oracle(cecxx::benchmark::cec_edition_t e) {
     using enum cecxx::benchmark::cec_edition_t;
     switch (e) {
