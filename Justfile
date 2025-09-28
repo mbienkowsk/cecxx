@@ -1,11 +1,5 @@
 set dotenv-filename := ".envrc"
 
-alias i := init
-alias b := build
-alias tu := run_unit_tests
-alias tc := run_compliance_tests
-alias c := clean
-
 cxx_compiler := "${CXX}"
 c_compiler := "${CC}"
 cmake_build_type := "${BUILD_TYPE}"
@@ -17,10 +11,11 @@ ncores := `nproc`
 default:
   @just --list
 
-init:
+init cxx=cxx_compiler:
   git submodule update --init
+  cd data && unzip -uq \*.zip
   mkdir -p {{build_dir}}
-  CXX={{cxx_compiler}} cmake \
+  CXX={{cxx}} cmake \
     -B {{build_dir}} \
     -S . \
     -G "{{cmake_generator}}" \
@@ -33,15 +28,18 @@ init:
 build: 
   cmake --build {{build_dir}} --parallel {{ncores}}
 
-run_unit_tests:
-  unzip -f data/cec2017.zip -d data
-  unzip -f data/cec2014.zip -d data
-  ctest --test-dir {{build_dir}}/test/unit
+instal:
+  cmake --install {{build_dir}}
 
-run_compliance_tests: 
-  unzip -f data/cec2017.zip -d data
-  unzip -f data/cec2014.zip -d data
-  ASAN_OPTIONS=detect_leaks=0 ./{{build_dir}}/test/compliance/cecxx-compliance-tests
+run_unit_tests:
+  ./artifacts/bin/unit-tests
+
+run_compliance_tests duration_seconds jobs=ncores: 
+  python3 scripts/run_compliance_tests.py \
+    --target artifacts/bin/compliance-tests \
+    --edition 2013 2014 2017 \
+    --duration {{duration_seconds}} \
+    --jobs {{jobs}}
 
 clean: 
   rm -rf {{build_dir}}
