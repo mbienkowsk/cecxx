@@ -5,6 +5,7 @@ c_compiler := "${CC}"
 cmake_build_type := "${BUILD_TYPE}"
 cmake_generator := "${GENERATOR}"
 build_dir := "builddir/" + cxx_compiler
+python_dir := "python"
 target_output_dir := "artifacts"
 ncores := `nproc`
 
@@ -24,8 +25,10 @@ init cxx=cxx_compiler:
     -DCMAKE_BUILD_TYPE={{cmake_build_type}} \
     -DWITH_UNIT_TESTS=on \
     -DWITH_COMPLIANCE_TESTS=on \
-    -DWITH_EXAMPLES=on
+    -DWITH_EXAMPLES=on \
+    -DWITH_PYTHON_BINDINGS=on
   ln -fs {{build_dir}}/compile_commands.json compile_commands.json
+  ln -fs {{build_dir}}/compile_commands.json {{python_dir}}/compile_commands.json
 
 build: 
   cmake --build {{build_dir}} --parallel {{ncores}}

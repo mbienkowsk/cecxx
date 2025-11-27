@@ -3,6 +3,7 @@ option(WITH_UNIT_TESTS "Build unit tests" OFF)
 
 option(WITH_EXAMPLES "Build examples" OFF)
 option(WITH_BENCHMARKS "Build benchmarks" OFF)
+option(WITH_PYTHON_BINDINGS "Build python bindings" OFF)
 
 set(CECXX_BENCHMARK_DATA_STORAGE "/var/lib/cecxx")
 set(CECXX_TARGET_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/artifacts")

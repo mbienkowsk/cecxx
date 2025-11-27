@@ -77,6 +77,10 @@ if (WITH_UNIT_TESTS OR WITH_COMPLIANCE_TESTS)
   add_subdirectory(test)
 endif()
 
+if (WITH_PYTHON_BINDINGS)
+  add_subdirectory(python)
+endif()
+
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cecxx.pc.in
   ${CMAKE_CURRENT_BINARY_DIR}/cecxx.pc

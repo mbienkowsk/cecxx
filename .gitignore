@@ -8,3 +8,6 @@ include/cecxx/benchmark/defaults.hpp
 data/*
 compile_commands.json
 artifacts/*
+python/.cache/*
+python/build/
+python/**/__pycache__

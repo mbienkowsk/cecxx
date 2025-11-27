@@ -1,0 +1,25 @@
+[project]
+name = "cecxx"
+version = "0.1.0"
+description = "Python bindings for cecxx"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "nanobind>=2.9.2",
+]
+
+# https://nanobind.readthedocs.io/en/latest/packaging.html#step-2-specify-build-dependencies-and-metadata
+[build-system]
+requires = ["scikit-build-core >=0.4.3", "nanobind >=1.3.2"]
+build-backend = "scikit_build_core.build"
+[tool.scikit-build]
+minimum-version = "0.4"
+build-dir = "build/{wheel_tag}"
+wheel.py-api = "cp312"
+
+[tool.uv]
+cache-keys = [
+    { file = "**/*.cpp" },
+    { file = "**/*.h" },
+    { file = "CMakeLists.txt" }
+]
