@@ -24,7 +24,10 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE OUTPUT_VARIABLE nanobind_ROOT)
 find_package(nanobind CONFIG REQUIRED)
 
+
 nanobind_add_module(bindings STABLE_ABI NB_STATIC src/bindings.cpp)
+target_compile_features(bindings PRIVATE cxx_std_23)
+target_link_libraries(bindings PRIVATE cecxx)
 
 install(TARGETS bindings LIBRARY DESTINATION cecxx)
 
