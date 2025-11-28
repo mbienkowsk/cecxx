@@ -26,6 +26,17 @@ find_package(nanobind CONFIG REQUIRED)
 
 
 nanobind_add_module(bindings STABLE_ABI NB_STATIC src/bindings.cpp)
+
+nanobind_add_stub(
+  cecxx_bindings_stub
+  MODULE bindings
+  MARKER_FILE "${CMAKE_CURRENT_SOURCE_DIR}/cecxx/py.typed"
+  OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/cecxx/bindings.pyi"
+  PYTHON_PATH $<TARGET_FILE_DIR:bindings>
+  DEPENDS bindings
+)
+add_custom_target(build_stubs ALL DEPENDS cecxx_bindings_stub)
+
 target_compile_features(bindings PRIVATE cxx_std_23)
 target_link_libraries(bindings PRIVATE cecxx)
 
