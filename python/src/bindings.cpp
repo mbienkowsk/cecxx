@@ -2,6 +2,7 @@
 #include <cecxx/mdspan.hpp>
 #include <cstdlib>
 #include <nanobind/nanobind.h>
+#include <nanobind/stl/vector.h>
 #include <print>
 #include <ranges>
 #include <vector>
@@ -12,10 +13,8 @@ using namespace cecxx::benchmark;
 namespace rn = std::ranges;
 namespace rv = std::ranges::views;
 
-auto example() -> int {
+auto example(std::vector<dimension_t> dimensions) -> int {
     try {
-        const auto dimensions = std::vector{10uz, 30uz, 50uz, 100uz};
-
         // Create an evaluator object for the CEC2017 benchmark
         auto cec_2017 = evaluator(cec_edition_t::cec2017, dimensions);
 
@@ -40,5 +39,5 @@ auto example() -> int {
 
 NB_MODULE(bindings, m) {
     m.doc() = "cecxx bindings";
-    m.def("run_example", &example);
+    m.def("run_example", &example, "dimensions"_a);
 }
