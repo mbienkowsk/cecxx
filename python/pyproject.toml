@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "nanobind>=2.9.2",
+    "numpy>=2.3.5",
 ]
 
 # https://nanobind.readthedocs.io/en/latest/packaging.html#step-2-specify-build-dependencies-and-metadata

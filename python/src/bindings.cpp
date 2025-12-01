@@ -1,3 +1,5 @@
+#include "cecxx/detail/benchmark/evaluator/types.hpp"
+#include "nanobind/ndarray.h"
 #include <cecxx/benchmark/evaluator.hpp>
 #include <cecxx/mdspan.hpp>
 #include <cstdlib>
@@ -37,7 +39,16 @@ auto example(std::vector<dimension_t> dimensions) -> int {
     return EXIT_SUCCESS;
 }
 
+// Input is a row-major numpy array with shape (dimension, n_samples)
+auto evaluate_cec_2017(problem_number_t number, dimension_t dimension, nb::ndarray<double, nanobind::c_contig> &input) {
+    auto cec_2017 = evaluator(cec_edition_t::cec2017, std::vector{dimension});
+    const auto mat = cecxx::mdspan{input.data(), dimension, input.shape(1)};
+    const auto cec_rv = cec_2017(number, mat);
+    return nb::cast(cec_rv);
+}
+
 NB_MODULE(bindings, m) {
     m.doc() = "cecxx bindings";
     m.def("run_example", &example, "dimensions"_a);
+    m.def("cec2017", &evaluate_cec_2017, "number"_a, "dimension"_a, "input"_a);
 }
