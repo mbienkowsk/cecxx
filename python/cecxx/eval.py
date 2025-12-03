@@ -10,7 +10,7 @@ def swap_order(arr: np.ndarray):
 def cec2017(fn: int, input: np.ndarray):
     """Wrapper for evaluating a given cec2017 fun which takes care of array column/row majority and cpp return type"""
     dim: int = input.shape[1]
-    return np.array(bindings.cec2017(fn, dim, swap_order(input)))
+    return np.array(bindings.cec(2017, fn, dim, swap_order(input)))
 
 
 # TODO: unit test
