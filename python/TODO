@@ -1,0 +1,12 @@
+
+CEC2017 optimum values before removal of F2 - the updated doc with 29 funs seems to have shifted optima of 3-30 to align with their numbering?
+
+https://www.scribd.com/document/404296920/Definitions-of-CEC2017-Benchmark-Suite-Final-Version-Updated
+
+this seems to show what they were before, but it has the same date of modification on the title page? :D
+
+- error handling for function numbers out of bounds, currently non-descriptive error in unordered_map access
+
+autopush to pypi via CI
+
+unit tests
