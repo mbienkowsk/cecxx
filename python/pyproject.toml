@@ -1,6 +1,6 @@
 [project]
 name = "cecxx"
-version = "0.1.0a1"
+version = "0.1.0a2"
 description = "Python bindings for an implementation of CECs benchmarks in C++23"
 readme = "README.md"
 requires-python = ">=3.12"
