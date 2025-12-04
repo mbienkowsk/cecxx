@@ -3,42 +3,13 @@
 #include <cecxx/benchmark/evaluator.hpp>
 #include <cecxx/mdspan.hpp>
 #include <cstdint>
-#include <cstdlib>
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/vector.h>
-#include <print>
-#include <ranges>
 #include <vector>
 
 namespace nb = nanobind;
 using namespace nb::literals;
 using namespace cecxx::benchmark;
-namespace rn = std::ranges;
-namespace rv = std::ranges::views;
-
-auto example(std::vector<dimension_t> dimensions) -> int {
-    try {
-        // Create an evaluator object for the CEC2017 benchmark
-        auto cec_2017 = evaluator(cec_edition_t::cec2017, dimensions);
-
-        // Create problem grid [problem_number X dimension]
-        const auto problem_grid = rv::cartesian_product(dimensions, rv::iota(1, 30));
-
-        // Evaluate given input on each optimization problem from CEC2017/D{10, 30, 50, 100}
-        for (const auto &[dim, fn] : problem_grid) {
-            // Prepare input matrix [dim x 2]
-            const auto input = rv::repeat(0.0) | rv::take(2 * dim) | rn::to<std::vector<double>>();
-            const auto mat = cecxx::mdspan{input.data(), dim, 2};
-
-            const auto output = cec_2017(fn, mat);
-            std::println("dim = {}, fn = {}, output[0] = {}, output[1] = {}", dim, fn, output[0], output[1]);
-        }
-    } catch (std::exception &e) {
-        std::println("Failed: {}", e.what());
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
-}
 
 auto to_cec_edition(uint16_t edition) -> cec_edition_t {
     switch (edition) {
@@ -53,7 +24,6 @@ auto to_cec_edition(uint16_t edition) -> cec_edition_t {
     }
 }
 
-// Input is a row-major numpy array with shape (dimension, n_samples)
 auto evaluate_cec(uint16_t edition, problem_number_t number, dimension_t dimension,
                   nb::ndarray<double, nanobind::c_contig> &input) {
     const auto cec = evaluator(to_cec_edition(edition), std::vector{dimension});
@@ -64,6 +34,8 @@ auto evaluate_cec(uint16_t edition, problem_number_t number, dimension_t dimensi
 
 NB_MODULE(bindings, m) {
     m.doc() = "cecxx bindings";
-    m.def("run_example", &example, "dimensions"_a);
-    m.def("cec", &evaluate_cec, "edition"_a, "number"_a, "dimension"_a, "input"_a);
+    m.def(
+        "cec", &evaluate_cec, "edition"_a, "number"_a, "dimension"_a, "input"_a,
+        "Binding for the C++ cecxx evaluator. When using this, the input should be a row-major numpy array with shape "
+        "(dimension, n_samples) - opposite to using the public API");
 }
