@@ -1,8 +1,8 @@
 import numpy as np
 
 from cecxx import bindings
+from cecxx.core import get_cec_function
 from cecxx.editions import CECEdition
-from cecxx.evaluate import get_cec_function
 
 
 def swap_order(arr: np.ndarray):
