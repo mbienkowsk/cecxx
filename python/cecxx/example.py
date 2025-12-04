@@ -1,69 +1,25 @@
 import numpy as np
 
-from cecxx import bindings
-from cecxx.core import get_cec_function
-from cecxx.editions import CECEdition
+import cecxx
+from cecxx import CECEdition
 
+dim = 10
+x = np.full(dim, 10.0)
+pop = np.stack([x, np.zeros(dim)])
 
-def swap_order(arr: np.ndarray):
-    return np.swapaxes(arr, 0, 1)
+print("--- Direct Evaluation (CEC2017 F1) ---")
+print(f"Input: {x}")
+val = cecxx.evaluate(CECEdition.CEC2017, 1, dim, x)
+print(f"Result: {val}")
 
+print("\n--- With Global Optimum Subtraction ---")
+val_diff = cecxx.evaluate(CECEdition.CEC2017, 1, dim, x, subtract_y_global=True)
+print(f"Result (shifted): {val_diff}")
 
-def cec2017(fn: int, input: np.ndarray):
-    """Wrapper for evaluating a given cec2017 fun which takes care of array column/row majority and cpp return type"""
-    dim: int = input.shape[1]
-    return np.array(bindings.cec(2017, fn, dim, swap_order(input)))
+print("\n--- Wrapped Evaluator (CEC2014 F2) ---")
+f2 = cecxx.get_cec_function(CECEdition.CEC2014, 2, dim, subtract_y_global=True)
+print(f"Global optimum for this function: {f2.y_global}")
 
+print(f"Single evaluation: {f2(x)}")
 
-# TODO: unit test
-if __name__ == "__main__":
-    cec1_2017 = get_cec_function(CECEdition.CEC2017, 1, 10)
-    FN = 1
-    print("ZEROS")
-    input_zeros = np.zeros((2, 10))
-    output = cec2017(FN, input_zeros)
-    assert np.all(output == cec1_2017(input_zeros))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("ONES")
-    input_ones = np.ones((2, 10))
-    output = cec2017(FN, input_ones)
-    assert np.all(output == cec1_2017(input_ones))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("100s")
-    input_100s = np.full((2, 10), 100.0)
-    output = cec2017(FN, input_100s)
-    assert np.all(output == cec1_2017(input_100s))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("ZEROS & ZEROS")
-    input_zeros_zeros = np.stack((np.zeros(10), np.zeros(10)), axis=0)
-    output = cec2017(FN, input_zeros_zeros)
-    assert np.all(output == cec1_2017(input_zeros_zeros))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("ZEROS & ONES")
-    input_zeros_ones = np.stack((np.zeros(10), np.ones(10)), axis=0)
-    output = cec2017(FN, input_zeros_ones)
-    assert np.all(output == cec1_2017(input_zeros_ones))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("ZEROS & 100s")
-    input_zeros_100s = np.stack((np.zeros(10), np.full(10, 100.0)), axis=0)
-    output = cec2017(FN, input_zeros_100s)
-    assert np.all(output == cec1_2017(input_zeros_100s))
-    print(f"output: {output}")
-    print("=" * 20)
-
-    print("100s & ZEROS")
-    input_100s_zeros = np.stack((np.full(10, 100.0), np.zeros(10)), axis=0)
-    output = cec2017(FN, input_100s_zeros)
-    assert np.all(output == cec1_2017(input_100s_zeros))
-    print(f"output: {output}")
-    print("=" * 20)
+print(f"Batch evaluation (first row is same as above):{f2(pop)}")
