@@ -31,19 +31,17 @@ def evaluate(
     x_packed = np.atleast_2d(x)
     check_dimension(x_packed, dimension)
     x_column_major = np.swapaxes(x_packed, 0, 1)
-    y = np.array(cec(edition.value, fn, dimension, x_column_major))
+    return_value = np.array(cec(edition.value, fn, dimension, x_column_major))
 
-    # TODO: 1dim vector input -> 1dim vector output
-    if subtract_y_global:
-        return_value = y - edition.optimum_for_function(fn)
-        if (return_value < 0).all():  # FIXME: this will error out with an array!
+    return_value = return_value if not subtract_y_global else return_value - edition.optimum_for_function(fn)
+
+    if subtract_y_global and (return_value < 0).all():
             warnings.warn(
                 f"y - global_optimum < 0 for {edition}.F{fn} detected - this shouldn't happen",
                 category=RuntimeWarning,
             )
-        return return_value
-    return y
 
+    return return_value if len(return_value) > 1 else return_value[0]
 
 @dataclass
 class WrappedCECEvaluator:
