@@ -13,3 +13,4 @@ python/build/
 python/**/__pycache__
 python/cecxx/bindings.pyi
 python/cecxx/py.typed
+python/.env
