@@ -17,7 +17,7 @@ maintainers = [
     {name = "Maksym Bieńkowski", email="him@mbienkowski.pl"},
 ]
 license = "GPL-3.0-only"
-license_files = ["LICENSE"]
+license-files = ["LICENSE"]
 keywords = ["optimization", "benchmark-functions", "evolutionary-computation", "global-optimization", "cec"]
 
 # FIXME: update after merging into ewarchul/cecxx
