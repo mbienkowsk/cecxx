@@ -1,12 +1,31 @@
 [project]
 name = "cecxx"
 version = "0.1.0"
-description = "Python bindings for cecxx"
+description = "Python bindings for an implementation of CECs benchmarks in C++23"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "nanobind>=2.9.2",
     "numpy>=2.3.5",
+]
+authors = [
+    {name = "Eryk Warchulski", email="eryk.warchulski@pw.edu.pl"},
+    {name = "Maksym Bieńkowski", email="him@mbienkowski.pl"},
+]
+maintainers = [
+    {name = "Eryk Warchulski", email="eryk.warchulski@pw.edu.pl"},
+    {name = "Maksym Bieńkowski", email="him@mbienkowski.pl"},
+]
+license = "GPL-3.0-only"
+license_files = ["LICENSE"]
+keywords = ["optimization", "benchmark-functions", "evolutionary-computation", "global-optimization", "cec"]
+
+# FIXME: update after merging into ewarchul/cecxx
+urls = {Repository = "https://github.com/mbienkowsk/cecxx"}
+
+[dependency-groups]
+dev = [
+    "ipython>=9.7.0",
 ]
 
 # https://nanobind.readthedocs.io/en/latest/packaging.html#step-2-specify-build-dependencies-and-metadata
@@ -25,7 +44,8 @@ cache-keys = [
     { file = "CMakeLists.txt" }
 ]
 
-[dependency-groups]
-dev = [
-    "ipython>=9.7.0",
-]
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
