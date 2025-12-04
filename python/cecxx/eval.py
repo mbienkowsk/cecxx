@@ -1,6 +1,8 @@
 import numpy as np
 
 from cecxx import bindings
+from cecxx.editions import CECEdition
+from cecxx.evaluate import get_cec_function
 
 
 def swap_order(arr: np.ndarray):
@@ -15,33 +17,53 @@ def cec2017(fn: int, input: np.ndarray):
 
 # TODO: unit test
 if __name__ == "__main__":
-    DIM = 10
+    cec1_2017 = get_cec_function(CECEdition.CEC2017, 1, 10)
     FN = 1
     print("ZEROS")
-    input = np.zeros((2, 10))
-    output = cec2017(FN, input)
+    input_zeros = np.zeros((2, 10))
+    output = cec2017(FN, input_zeros)
+    assert np.all(output == cec1_2017(input_zeros))
     print(f"output: {output}")
     print("=" * 20)
+
     print("ONES")
-    output = cec2017(FN, np.ones((2, 10)))
+    input_ones = np.ones((2, 10))
+    output = cec2017(FN, input_ones)
+    assert np.all(output == cec1_2017(input_ones))
     print(f"output: {output}")
     print("=" * 20)
+
     print("100s")
-    output = cec2017(FN, np.full((2, 10), 100.0))
+    input_100s = np.full((2, 10), 100.0)
+    output = cec2017(FN, input_100s)
+    assert np.all(output == cec1_2017(input_100s))
     print(f"output: {output}")
     print("=" * 20)
+
     print("ZEROS & ZEROS")
-    output = cec2017(FN, np.stack((np.zeros(10), np.zeros(10)), axis=0))
+    input_zeros_zeros = np.stack((np.zeros(10), np.zeros(10)), axis=0)
+    output = cec2017(FN, input_zeros_zeros)
+    assert np.all(output == cec1_2017(input_zeros_zeros))
     print(f"output: {output}")
     print("=" * 20)
+
     print("ZEROS & ONES")
-    output = cec2017(FN, np.stack((np.zeros(10), np.ones(10)), axis=0))
+    input_zeros_ones = np.stack((np.zeros(10), np.ones(10)), axis=0)
+    output = cec2017(FN, input_zeros_ones)
+    assert np.all(output == cec1_2017(input_zeros_ones))
     print(f"output: {output}")
     print("=" * 20)
+
     print("ZEROS & 100s")
-    output = cec2017(FN, np.stack((np.zeros(10), np.full(10, 100.0)), axis=0))
+    input_zeros_100s = np.stack((np.zeros(10), np.full(10, 100.0)), axis=0)
+    output = cec2017(FN, input_zeros_100s)
+    assert np.all(output == cec1_2017(input_zeros_100s))
     print(f"output: {output}")
     print("=" * 20)
+
     print("100s & ZEROS")
-    output = cec2017(FN, np.stack((np.full(10, 100.0), np.zeros(10)), axis=0))
+    input_100s_zeros = np.stack((np.full(10, 100.0), np.zeros(10)), axis=0)
+    output = cec2017(FN, input_100s_zeros)
+    assert np.all(output == cec1_2017(input_100s_zeros))
     print(f"output: {output}")
+    print("=" * 20)
