@@ -5,9 +5,9 @@ from typing import override
 class CECEdition(Enum):
     """CEC editions supported by cecxx"""
 
-    CEC_2013 = 2013
-    CEC_2014 = 2014
-    CEC_2017 = 2017
+    CEC2013 = 2013
+    CEC2014 = 2014
+    CEC2017 = 2017
 
     def optimum_for_function(self, number: int):
         match self.value:

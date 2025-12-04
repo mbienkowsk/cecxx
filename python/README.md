@@ -29,10 +29,10 @@ Example of evaluating F30 of CEC2014:
 import cecxx
 import numpy as np
  
-cecxx.evaluate_cec(cecxx.CECEdition.CEC_2014, 30, 30, np.zeros(30))
+cecxx.evaluate_cec(cecxx.CECEdition.CEC2014, 30, 30, np.zeros(30))
 > np.float64(3200.0)
 
-cecxx.evaluate_cec(cecxx.CECEdition.CEC_2013, 1, 30, np.zeros(30), subtract_y_global=True)
+cecxx.evaluate_cec(cecxx.CECEdition.CEC2013, 1, 30, np.zeros(30), subtract_y_global=True)
 > np.float64(200.0)
 ```
 
@@ -56,7 +56,7 @@ Example of the same calls with this approach:
 import cecxx
 import numpy as np
 
-cec30_2014 = cecxx.get_cec_function(cecxx.CECEdition.CEC_2014, 30)
+cec30_2014 = cecxx.get_cec_function(cecxx.CECEdition.CEC2014, 30)
 
 cec30_2014(30, np.zeros(30))
 > np.float64(3200.0)
@@ -67,7 +67,7 @@ cec30_2014(30, np.zeros(30), subtract_y_global=True)
 
 Both interfaces support evaluating multiple points in one call:
 ```python
-cecxx.evaluate(cecxx.CECEdition.CEC_2014, 30, 30, np.stack((np.zeros(30), np.ones(30))))
+cecxx.evaluate(cecxx.CECEdition.CEC2014, 30, 30, np.stack((np.zeros(30), np.ones(30))))
 > array([3.20000000e+03, 1.14047996e+07])
 ```
 
