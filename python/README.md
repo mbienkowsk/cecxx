@@ -8,9 +8,15 @@ To build and install the {cecxx} library, the following dependencies are require
 via pip:
 `pip install cecxx`
 
+## Example usage
+see `cecxx/example.py` (`uv run -m cecxx.example`) and below
+
 ## API
 
-Two ways of evaluating a function are shared:
+Two ways of evaluating a function are provided:
+
+### 1. Direct Evaluation
+Use `cecxx.evaluate` when you want to pass all parameters explicitly for a single call.
 
 ```python
 cecxx.evaluate(
@@ -22,55 +28,71 @@ cecxx.evaluate(
     subtract_y_global: bool = False,
 )
 ```
-evaluates a function with the given parameters once.
 
-Example of evaluating F30 of CEC2014:
+**Example:** Evaluating F30 of CEC2014 in 30 dimensions:
 ```python
 import cecxx
 import numpy as np
  
-cecxx.evaluate_cec(cecxx.CECEdition.CEC2014, 30, 30, np.zeros(30))
+# Standard evaluation
+cecxx.evaluate(cecxx.CECEdition.CEC2014, 30, 30, np.zeros(30))
 > np.float64(3200.0)
 
-cecxx.evaluate_cec(cecxx.CECEdition.CEC2013, 1, 30, np.zeros(30), subtract_y_global=True)
+# Evaluation relative to the global optimum
+cecxx.evaluate(cecxx.CECEdition.CEC2014, 1, 30, np.zeros(30), subtract_y_global=True)
 > np.float64(200.0)
 ```
 
-With `subtract_y_global` you can make cecxx return the difference between the function's global optimum as per the definitions for the given suite, **this is probably what you want to do** since this is the grading criterium, but it's opt-in nonetheless.
+With `subtract_y_global=True`, cecxx returns the difference between the result and the function's global optimum as per the suite definitions. **This is probably what you want**, as it is the grading criterion, but it remains opt-in.
 
-
+### 2. Wrapped Evaluator
+Use `get_cec_function` to create a callable object with fixed parameters.
 
 ```python
-get_cec_function(edition: CECEdition, number: int)
+get_cec_function(
+    edition: CECEdition, 
+    number: int, 
+    dimension: int, 
+    *, 
+    subtract_y_global: bool | None = None
+)
 ```
 
-returns a wrapped evaluator which:
-* permanently sets the edition and fn params when evaluating
-* contains some extra info:
-    * `number` - number of the function
-    * `edition` - the underlying CECEdition enum for whatever reason you might need it
-    * `y_global` - global value of the optimum as per the problem definitions for the given suite
+This returns a wrapped evaluator which:
+* **Permanently sets** the `edition`, `number`, `dimension`, and `subtract_y_global` settings.
+* Contains extra metadata properties:
+    * `number` - Number of the function.
+    * `edition` - The underlying `CECEdition` enum.
+    * `y_global` - Global value of the optimum as per the problem definitions.
 
-Example of the same calls with this approach:
+**Example:**
 ```python
 import cecxx
 import numpy as np
 
-cec30_2014 = cecxx.get_cec_function(cecxx.CECEdition.CEC2014, 30)
+# Create a specific evaluator for CEC2014 F30, 30D
+f30 = cecxx.get_cec_function(cecxx.CECEdition.CEC2014, 30, 30)
 
-cec30_2014(30, np.zeros(30))
+# Now you only need to pass the input vector 'x'
+f30(np.zeros(30))
 > np.float64(3200.0)
 
-cec30_2014(30, np.zeros(30), subtract_y_global=True)
+# You can also bake the subtraction into the evaluator creation
+f1_diff = cecxx.get_cec_function(cecxx.CECEdition.CEC2013, 1, 30, subtract_y_global=True)
+
+f1_diff(np.zeros(30))
 > np.float64(200.0)
 ```
 
-Both interfaces support evaluating multiple points in one call:
+### Batch Evaluation
+Both interfaces support evaluating multiple points in one call by passing a 2D array:
+
 ```python
-cecxx.evaluate(cecxx.CECEdition.CEC2014, 30, 30, np.stack((np.zeros(30), np.ones(30))))
+# Evaluates two points at once
+points = np.stack((np.zeros(30), np.ones(30)))
+cecxx.evaluate(cecxx.CECEdition.CEC2014, 30, 30, points)
 > array([3.20000000e+03, 1.14047996e+07])
 ```
-
 
 ## Installation (development)
 `uv sync` in the directory of this README
